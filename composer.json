@@ -13,7 +13,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Olek\\Signature\\": "lib/"
+            "Olek\\Signature\\": "lib/",
+            "Olek\\Tests\\": "./tests/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
     }
 }

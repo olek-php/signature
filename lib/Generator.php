@@ -8,7 +8,13 @@ class Generator
     {
         $timestamp = $timestamp ?? time();
         $signedPayload = "$timestamp.$path.$payload";
-        return self::compute($signedPayload, $secret);
+        $data = [
+            "t" => $timestamp,
+            "s" => self::compute($signedPayload, $secret)
+        ];
+        return implode(",", array_map(function ($v, $k) {
+            return sprintf("%s=%s", $k, $v);
+        }, $data, array_keys($data)));
     }
 
     private static function compute(string $payload, string $secret): string

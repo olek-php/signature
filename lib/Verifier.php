@@ -9,19 +9,23 @@ class Verifier
     /**
      * @throws VerificationException
      */
-    public static function verify(string $path, string $payload, string $header, string $secret, int $tolerance = self::DEFAULT_TOLERANCE): bool
+    public static function verifySignature(string $path, string $payload, string $header, string $secret, int $tolerance = self::DEFAULT_TOLERANCE): bool
     {
         $timestamp = self::getTimestamp($header);
-        $signature = self::getSignatures($header);
+        $signature = self::getSignature($header);
 
         if (-1 === $timestamp) {
             throw new VerificationException("Unable to extract timestamp and signatures from header");
         }
         if (empty($signature)) {
-            throw new VerificationException("No signatures found with expected scheme");
+            throw new VerificationException("No signature found with expected scheme");
         }
 
-        $expectedSignature = Generator::generate($path, $payload, $secret, $timestamp);
+        $expectedHeader = Generator::generate($path, $payload, $secret, $timestamp);
+        $expectedSignature = self::getSignature($expectedHeader);
+        if (empty($expectedSignature)) {
+            throw new VerificationException("No signature generate with expected scheme");
+        }
         $resultCompare = self::compare($expectedSignature, $signature);
 
         if ($resultCompare === false) {
@@ -53,7 +57,7 @@ class Verifier
         return -1;
     }
 
-    private static function getSignatures(string $header)
+    private static function getSignature(string $header): string
     {
         $items = explode(',', $header);
 
