@@ -1,0 +1,19 @@
+{
+    "name": "olek-php/signature",
+    "type": "library",
+    "version": "0.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Oleksandr Riabenko"
+        }
+    ],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Olek\\Signature\\": "lib/"
+        }
+    }
+}
