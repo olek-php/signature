@@ -16,7 +16,7 @@ class VerifierTest extends TestCase
         $timestamp = 1721126075;
         $secret = "secret";
         $signature = Generator::generate($path, $payload, $secret, $timestamp);
-        $result = Verifier::verifySignature($path, $payload, $signature, $secret, $timestamp);
+        $result = Verifier::verify($path, $payload, $signature, $secret, $timestamp);
 
         $this->assertTrue($result);
     }
@@ -30,7 +30,7 @@ class VerifierTest extends TestCase
         $timestamp = 1721126075;
         $secret = "secret";
         $signature = Generator::generate($path1, $payload, $secret, $timestamp);
-        Verifier::verifySignature($path2, $payload, $signature, $secret, $timestamp);
+        Verifier::verify($path2, $payload, $signature, $secret, $timestamp);
     }
 
     public function testVerifierException2(): void
@@ -42,7 +42,7 @@ class VerifierTest extends TestCase
         $timestamp = 1721126075;
         $secret = "secret";
         $signature = Generator::generate($path, $payload1, $secret, $timestamp);
-        Verifier::verifySignature($path, $payload2, $signature, $secret, $timestamp);
+        Verifier::verify($path, $payload2, $signature, $secret, $timestamp);
     }
 
     public function testVerifierException3(): void
@@ -53,7 +53,7 @@ class VerifierTest extends TestCase
         $timestamp = 1721126075;
         $secret = "secret";
         $signature = Generator::generate($path, $payload, $secret, $timestamp);
-        Verifier::verifySignature($path, $payload, $signature, $secret);
+        Verifier::verify($path, $payload, $signature, $secret);
     }
 
     public function testVerifier2(): void
@@ -64,7 +64,7 @@ class VerifierTest extends TestCase
         $timestamp2 = 1721127075;
         $secret = "secret";
         $signature = Generator::generate($path, $payload, $secret, $timestamp1);
-        $result = Verifier::verifySignature($path, $payload, $signature, $secret, $timestamp2);
+        $result = Verifier::verify($path, $payload, $signature, $secret, $timestamp2);
         $this->assertTrue($result);
     }
 }

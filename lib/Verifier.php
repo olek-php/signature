@@ -9,7 +9,7 @@ class Verifier
     /**
      * @throws VerificationException
      */
-    public static function verifySignature(string $path, string $payload, string $header, string $secret, int $tolerance = self::DEFAULT_TOLERANCE): bool
+    public static function verify(string $path, string $payload, string $header, string $secret, int $tolerance = self::DEFAULT_TOLERANCE): bool
     {
         $timestamp = self::getTimestamp($header);
         $signature = self::getSignature($header);
